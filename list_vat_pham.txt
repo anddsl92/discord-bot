@@ -1,0 +1,261 @@
+Astaroth=song kiếm=p
+Song Kiếm Tallum=song kiếm=r
+Quân Đoàn Bóng Tối=song kiếm=r
+Song Kiếm Thiên Sứ=song kiếm=r
+Cơn Thịnh Nộ Của Mardil=song kiếm=r
+Caladbolg=kiếm sĩ=p
+Lưỡi Kiếm Sirra=kiếm sĩ=r
+Kiếm Thiên Sứ=kiếm sĩ=r
+Thanh Kiếm Phép Màu=kiếm sĩ=r
+Kiếm Của Valhalla=kiếm sĩ=r
+Thương Thánh=giáo=p
+Kích Thiên Sứ=giáo=r
+Gươm Tallum=giáo=r
+Lansia=giáo=r
+Kích=giáo=r
+Nagastorm=dao găm=p
+Đoản Kiếm Quỷ=dao găm=r
+Sát Thủ Thiên Sứ=dao găm=r
+Sừng Của Cruma=dao găm=r
+Kẻ Ly Hồn=dao găm=r
+Cung Shyeed=cung=p
+Cung Carnivum=cung=r
+Cung Hiểm Hoạ=cung=r
+Cung Thiên Sứ=cung=r
+Cung Hồn=cung=r
+Cầu Phép Arkana=cầu phép=p
+Đầu Rồng Lửa=cầu phép=r
+Vuốt Cabrio=cầu phép=r
+Cầu Phép Thiên Sứ=cầu phép=r
+Đôi Mắt Linh Hồn=cầu phép=r
+Trượng Hoàng Gia=trượng=p
+Pha Lê Của Diamon=trượng=r
+Nhành Cây Thế Giới=trượng=r
+Trượng Thiên Sứ=trượng=r
+Trượng Của Nữ Hoàng Staccato=trượng=r
+Trượng Tinh Hồn=trượng=r
+Giáp Thập Tự Hoàng Gia=giáp=p
+Áo Choàng Đại Tướng Arcana=giáp=p
+Giáp Da Rồng=giáp=p
+Giáp Hắc Pha Lê=giáp=r
+Giáp Oai Nghiêm=giáp=r
+Giáp Của Apella=giáp=r
+Quân Phục Tuyệt Đối=r
+Giáp Ác Mộng=r
+Áo Choàng Savan=r
+Giáp Pauline=r
+Giáp Nevit=r
+Áo Choàng Tersi=r
+Giáp Anh Hùng Bị Lãng Quên=r
+Giáp Của Ác Ma=r
+Giáp Elf Cổ Đại=r
+Giáp Chân Thập Tự Hoàng Gia=quần=p
+Giáp Chân Hắc Huyết Hệ=quần=r
+Giáp Hơi Thở Của Silen=quần=r
+Giáp Chân Pha Lê=quần=r
+Giáp Chân Băng Kết=quần=r
+Giáp Chân Anh Hùng Bị Lãng Quên=quần=r
+Giáp Chân Ánh Sáng=quần=r
+Găng Tây Da Rồng=găng tay=p
+Ngọn Lửa Của Paagrio=găng tay=p
+Găng Tay Oai Nghiêm=găng tay=r
+Yarn Grapple=găng tay=r
+Găng Tay Chúc Phúc=găng tay=r
+Găng Tay Ác Mộng=găng tay=r
+Găng Tay Hắc Pha Lê=găng tay=r
+Người Bảo Vệ Tầm Nhìn=găng tay=r
+Găng Tay Pauline=găng tay=r
+Găng Tay Nevit=găng tay=r
+Găng Tay Tersi=găng tay=r
+Găng Tay Anh Hùng Bị Lãng Quên=găng tay=r
+Găng Tay Ác Ma=găng tay=r
+Găng Tay Elf Cổ Đại=găng tay=r
+Giày Da Rồng=giày=p
+Gió Của Sayha=giày=p
+Giày Ác Ma=giày=r
+Giày Ác Mộng=giày=r
+Giày Hắc Pha Lê=giày=r
+Giày Oai Nghiêm=giày=r
+Ủng Của Pauline=giày=r
+Giày Nevit=giày=r
+Giày Tersi=giày=r
+Giày Callie=giày=r
+Giày Anh Hùng Bị Lãng Quên=giày=r
+Giày Elf Cổ Đại=giày=r
+Nón Thập Tự Hoàng Gia=nón=p
+Vương Miện Đại Tướng Arcana=nón=p
+Nón Da Rồng=nón=p
+Mũ Giáp Ác Mộng=nón=r
+Nón Hắc Pha Lê=nón=r
+Vương Miện Oai Nghiêm=nón=r
+Mũ Giáp Medusa=nón=r
+Mũ Giáp Của Pauline=nón=r
+Nón Nevit=nón=r
+Vương Miện Tersi=nón=r
+Mũ Giáp Của Ác Ma=nón=r
+Mũ Giáp Elf Cổ Đại=nón=r
+Áo Choàng Ánh Sáng Nevit=áo choàng=p
+Áo Choàng Naarof=áo choàng=p
+Vảy Rồng=áo choàng=r
+Áo Choàng Jaken=áo choàng=r
+Áo Choàng Cầu Nguyện=áo choàng=r
+Cánh Của Nữ Hoàng Kiến=áo choàng=r
+Áo Choàng Aegis=áo choàng=r
+Áo Choàng Quyền Năng=áo choàng=r
+Đôi Cánh Của Selihoden=áo choàng=r
+Giọt Lệ Bóng Đêm=khiên=p
+Khiên Thiên Long=khiên=p
+Khiên Arcana=khiên=p
+Trái Tim Của Susceptor=khiên=r
+Khiên Xạ Thủ=khiên=r
+Khiên Paradia=khiên=r
+Vỏ Bọc Của Cruma=khiên=r
+Khiên Hoả Diệm=khiên=r
+Sừng Của Selihoden=khiên=r
+Cuộn Cường Hoá Vũ Khí Bị Nguyền Rủa=cuộn=r
+Cuộn Cường Hoá Giáp Bị Nguyền Rủa=cuộn=r
+Cuộn Cường Hoá Phụ Kiện Bị Nguyền Rủa=cuộn=r
+Mực Tím=nguyên liệu=p
+Mực Đỏ=nguyên liệu=r
+Mực Xanh=nguyên liệu=b
+Công Thức Huyền Thoại=nguyên liệu=p
+Mảnh Công Thức Huyền Thoại=nguyên liệu=p
+Mực Tinh Thể Mana(Huyền Thoại)=nguyên liệu=p
+Công Thức Sử Thi=nguyên liệu=r
+Dây Chuyền Valakas=dây chuyền=p
+Dây Chuyền Antharas=dây chuyền=p
+Dây Chuyền Lindvior=dây chuyền=p
+Dây Chuyền Đại Pháp Sư=dây chuyền=p
+Dây Chuyền Bất Tử=dây chuyền=r
+Dây Chuyền Linh Hồn Của Lilith=dây chuyền=r
+Dây Chuyền Linh Hồn Của Anakim=dây chuyền=r
+Dây Chuyền Baium=dây chuyền=r
+Dây Chuyền Jaken=dây chuyền=r
+Dây Chuyền Orfen=dây chuyền=r
+Vòng Cổ Oai Nghiêm=dây chuyền=r
+Dây Chuyền Apella=dây chuyền=r
+Dây Chuyền Ân Huệ=dây chuyền=r
+Nhẫn Của Desperion=nhẫn=p
+Nhẫn Của Anh Hùng Bị Lãng Quên=nhẫn=r
+Nhẫn Của Lilith=nhẫn=r
+Nhẫn Của Anakim=nhẫn=r
+Nhẫn Của Baium=nhẫn=r
+Nhẫn Của Beres=nhẫn=r
+Nhẫn Hạt Nhân=nhẫn=r
+Trái Tim Của Nữ Hoàng Kiến=nhẫn=r
+Nhẫn Nhiệt Huyết=nhẫn=r
+Nhẫn Oai Nghiêm=nhẫn=r
+Đai Lưng Quyền Năng=đai lưng=p
+Đai Của Maphru=đai lưng=p
+Đại Lưng Của Eratone=đai lưng=r
+Đai Lưng Của Tiat=đai lưng=r
+Đai Lưng Của Ekimus=đai lưng=r
+Đai Lưng Rồng=đai lưng=r
+Sách Kỹ Năng-Cầu Phép-Cầu Nguyện=sách cầu=p
+Sách Kỹ Năng-Cầu Phép-Diệt Vong=sách cầu=p
+Sách Kỹ Năng-Cầu Phép-Nỗi Đau Nghiệp Báo=sách cầu=p
+Sách Kỹ Năng-Cầu Phép-Tia Chớp Thần Thánh=sách cầu=r
+Sách Kỹ Năng-Cầu Phép-Phán Quyết=sách cầu=r
+Sách Kỹ Năng-Cầu Phép-Cầu Phép Cãi Tiến=sách cầu=r
+Sách Kỹ Năng-Cầu Phép-Khiên Ma Thuật=sách cầu=r
+Sách Kỹ Năng-Cầu Phép-Đao Phủ Thần Thánh=sách cầu=r
+Sách Kỹ Năng-Cầu Phép-Hồi Máu Nhóm=sách cầu=b
+Sách Kỹ Năng-Pháp Trượng-Sao Băng=sách trượng=p
+Sách Kỹ Năng-Pháp Trượng-Hỗn Loạn=sách trượng=p
+Sách Kỹ Năng-Pháp Trượng-Trọng Lực=sách trượng=p
+Sách Kỹ Năng-Pháp Trượng-Bão Tuyết=sách trượng=r
+Sách Kỹ Năng-Pháp Trượng-Giải Trừ=sách trượng=r
+Sách Kỹ Năng-Pháp Trượng-Hoang Mang=sách trượng=r
+Sách Kỹ Năng-Pháp Trượng-Phục Hồi Thi Triển I=sách trượng=r
+Sách Kỹ Năng-Pháp Trượng-Pha Lê Băng Giá=sách trượng=r
+Sách Kỹ Năng-Cung Thủ-Huỷ Diệt=sách cung=p
+Sách Kỹ Năng-Cung Thủ-Bắn Điểm Yếu=sách cung=p
+Sách Kỹ Năng-Cung Thủ-Xuyên Phá Tuyệt Đối=sách cung=p
+Sách Kỹ Năng-Cung Thủ-Mục Tiêu Thực Sự=sách cung=r
+Sách Kỹ Năng-Cung Thủ-Mũi Tử Thần=sách cung=r
+Sách Kỹ Năng-Cung Thủ-Trói Buộc=sách cung=r
+Sách Kỹ Năng-Cung Thủ-Khôi Phục Mana=sách cung=r
+Sách Kỹ Năng-Cung Thủ-Phát Bắn Uy Lực=sách cung=r
+Sách Kỹ Năng-Dao Găm-Bước Ẩn=sách dao=p
+Sách Kỹ Năng-Dao Găm-Con Rối=sách dao=p
+Sách Kỹ Năng-Dao Găm-Lưỡi Gươm Bóng Tối=sách dao=p
+Sách Kỹ Năng-Dao Găm-Tầm Nhìn Sát Thủ=sách dao=r
+Sách Kỹ Năng-Dao Găm-Lưỡi Kiếm Bóng Tối=sách dao=r
+Sách Kỹ Năng-Dao Găm-Ẩn Thân=sách dao=r
+Sách Kỹ Năng-Dao Găm-Độc Hại=sách dao=r
+Sách Kỹ Năng-Dao Găm-Tái Chuyển Động=sách dao=r
+Sách Kỹ Năng-Giáo-Bão Sấm Sét=sách giáo=p
+Sách Kỹ Năng-Giáo-Ngọn Giáo Tuyệt Đối=sách giáo=p
+Sách Kỹ Năng-Giáo-Dẫm Nát Đất=sách giáo=p
+Sách Kỹ Năng-Giáo-Cú Dậm Của Người Khổng Lồ=sách giáo=r
+Sách Kỹ Năng-Giáo-Huỷ Diệt Sinh Lực=sách giáo=r
+Sách Kỹ Năng-Giáo-Vô Hiệu Hoá Vũ Khí=sách giáo=r
+Sách Kỹ Năng-Giáo-Cú Đánh Vô Cực=sách giáo=r
+Sách Kỹ Năng-Giáo-Cuồng Nộ=sách giáo=r
+Sách Kỹ Năng-Song Kiếm-Phá Giáp=sách song kiếm=p
+Sách Kỹ Năng-Song Kiếm-Cuồng Loan=sách song kiếm=p
+Sách Kỹ Năng-Song Kiếm-Tác Động Kép=sách song kiếm=p
+Sách Kỹ Năng-Song Kiếm-Chém Ba Lần=sách song kiếm=r
+Sách Kỹ Năng-Song Kiếm-Lưỡi Kiếm Siêu Thanh=sách song kiếm=r
+Sách Kỹ Năng-Song Kiếm-Phát Hiện Điểm Yếu=sách song kiếm=r
+Sách Kỹ Năng-Song Kiếm-Phản Đòn Kép=sách song kiếm=r
+Sách Kỹ Năng-Song Kiếm-Vũ Điệu Cuồng Nộ=sách song kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Báo Thù=sách kiếm=p
+Sách Kỹ Năng-Kiếm Sĩ-Tấn Công Tàn Bạo=sách kiếm=p
+Sách Kỹ Năng-Kiếm Sĩ-Chuỗi Tấn Công=sách kiếm=p
+Sách Kỹ Năng-Kiếm Sĩ-Cú Sốc Kép=sách kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Ý Chí Sắt Đá=sách kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Cú Đánh Thần Thánh=sách kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Căm Thù=sách kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Với Tới Sự Sống=sách kiếm=r
+Sách Kỹ Năng-Kiếm Sĩ-Mũi Tên Phản Chiếu=sách kiếm=b
+Sách Người Kế Thừa-Cao Thủ Vũ Khí Hoàng Gia=sách kế thừa=r
+Sách Người Kế Thừa-Tăng Sức Mạnh Kỹ Năng I=sách kế thừa=r
+Sách Người Kế Thừa-Khả Năng Làm CHoáng I=sách kế thừa=r
+Sách Người Kế Thừa-Kháng Bắt Giữ=sách kế thừa=r
+Sách Người Kế Thừa-Kháng Làm Choáng I=sách kế thừa=r
+Sách Người Kế Thừa-Tăng Trí Tuệ=sách kế thừa=r
+Sách Người Kế Thừa-Tăng Tốc Độ Đánh=sách kế thừa=p
+Sách Người Kế Thừa-Nhà Vô Địch=sách kế thừa=p
+Linh Hồn Thủ Lĩnh Băng Đảng Mèo=
+Linh Hồn Orfen=nhốt hồn=p
+Linh Hồn Black Lily=nhốt hồn=p
+Linh Hồn Nữ Hoàng Kiến=nhốt hồn=p
+Linh Hồn Quái Thù Rồng=nhốt hồn=p
+Linh Hồn Balbo=nhốt hồn=p
+Linh Hồn Cellu=nhốt hồn=p
+Linh Hồn Korun=nhốt hồn=p
+Linh Hồn Core Susceptor=nhốt hồn=p
+Linh Hồn Timniel=nhốt hồn=p
+Linh Hồn Lepiro=nhốt hồn=p
+Linh Hồn Sellihoden=nhốt hồn=p
+Linh Hồn Quản Lý Băng Đảng Mèo=nhốt hồn=r
+Linh Hồn Savan=nhốt hồn=r
+Linh Hồn Tromba=nhốt hồn=r
+Linh Hồn Medusa=nhốt hồn=r
+Linh Hồn Behemoth=nhốt hồn=r
+Linh Hồn Talakin=nhốt hồn=r
+Linh Hồn Chertuba=nhốt hồn=r
+Linh Hồn Pan Dryad=nhốt hồn=r
+Linh Hồn Katan=nhốt hồn=r
+Linh Hồn Basilla=nhốt hồn=r
+Linh Hồn Timithris=nhốt hồn=r
+Linh Hồn Matura=nhốt hồn=r
+Linh Hồn Chỉ Huy TeManaest=nhốt hồn=r
+Linh Hồn Cruma Đột Biến=nhốt hồn=r
+Linh Hồn Gahareth=nhốt hồn=r
+Linh Hồn Breka=nhốt hồn=r
+Linh Hồn Sarka=nhốt hồn=r
+Linh Hồn Talkin=nhốt hồn=r
+Linh Hồn Sttonegeist=nhốt hồn=r
+Linh Hồn Felice=nhốt hồn=r
+Linh Hồn Cruma Bị Ô Nhiễm=nhốt hồn=r
+Linh Hồn Enkura=nhốt hồn=r
+Linh Hồn Silla=nhốt hồn=r
+Linh Hồn Muph=nhốt hồn=r
+Linh Hồn Normus=nhốt hồn=r
+Linh Hồn Ukanba=nhốt hồn=r
+Công Thức Hiếm x50=nguyên liệu=b
+
+
+
