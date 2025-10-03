@@ -63,11 +63,17 @@ GUILD_ROLE_OPTIONS = [
 
 BOSS_LIST = [
     {"name": "Orfen", "value": "orfen"},
+    {"name": "Orfen Xâm Lược", "value": "orfen_xam_luoc"},
     {"name": "Silla", "value": "silla"},
     {"name": "Murf", "value": "murf"},
     {"name": "Normus", "value": "normus"},
     {"name": "Ukanba", "value": "ukanba"},
     {"name": "Selihorden", "value": "selihorden"}
+]
+
+VI_TRI_OPTIONS = [
+    {"name": "Buff+Khiên", "value": "buff_khien"},
+    {"name": "Hồi Máu Đơn", "value": "hoi_mau_don"}
 ]
 
 # ===============================
@@ -179,6 +185,27 @@ async def send_to_webhook(data: dict):
     except Exception as e:
         print(f"❌ Không thể kết nối đến webhook: {e}")
         return False
+
+def load_boss_images():
+    """Đọc ảnh boss từ file anhboss.txt"""
+    boss_images = {}
+    try:
+        if os.path.exists('anhboss.txt'):
+            with open('anhboss.txt', 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if line and '=' in line:
+                        boss_name, image_url = line.split('=', 1)
+                        boss_images[boss_name.strip()] = image_url.strip()
+            print(f"✅ Đã tải {len(boss_images)} ảnh boss từ file")
+        else:
+            print("⚠️ Không tìm thấy file anhboss.txt")
+    except Exception as e:
+        print(f"❌ Lỗi khi đọc file anhboss.txt: {e}")
+    return boss_images
+
+# Tải ảnh boss
+BOSS_IMAGES = load_boss_images()
 
 # ===============================
 # TASK KIỂM TRA AUCTION HẾT HẠN
@@ -829,115 +856,30 @@ async def fix_setrole_command(interaction: discord.Interaction):
         )
 
 # ===============================
-# HỆ THỐNG CHẤM CÔNG VÀ DUYỆT BOSS - ĐÃ ĐIỀU CHỈNH CHO WEBHOOK.SITE
+# HỆ THỐNG CHẤM CÔNG MỚI - ĐÃ ĐIỀU CHỈNH
 # ===============================
 
-@bot.tree.command(name="chamcong", description="Chấm công hàng ngày")
-async def chamcong_command(interaction: discord.Interaction):
-    """Lệnh chấm công hàng ngày"""
-    user_id = interaction.user.id
-    today = datetime.now().date().isoformat()
-    
-    # Kiểm tra xem user đã set role chưa
-    if user_id not in user_roles_db:
-        await interaction.response.send_message(
-            "❌ Bạn cần đăng ký role trước khi sử dụng lệnh chấm công!",
-            ephemeral=True
-        )
-        return
-    
-    # Kiểm tra xem đã chấm công hôm nay chưa
-    if user_id in checkins_db and checkins_db[user_id].get('last_checkin') == today:
-        await interaction.response.send_message(
-            "❌ Bạn đã chấm công hôm nay rồi!",
-            ephemeral=True
-        )
-        return
-    
-    # Chấm công
-    if user_id not in checkins_db:
-        checkins_db[user_id] = {'streak': 0, 'last_checkin': today, 'total_days': 0}
-    
-    user_data = checkins_db[user_id]
-    
-    # Kiểm tra streak
-    yesterday = (datetime.now().date() - timedelta(days=1)).isoformat()
-    if user_data['last_checkin'] == yesterday:
-        user_data['streak'] += 1
-    elif user_data['last_checkin'] != today:
-        user_data['streak'] = 1
-    
-    user_data['last_checkin'] = today
-    user_data['total_days'] += 1
-    
-    # Tạo embed thông báo
-    embed = discord.Embed(
-        title="✅ CHẤM CÔNG THÀNH CÔNG",
-        color=0x00ff00,
-        timestamp=discord.utils.utcnow()
-    )
-    
-    role_data = user_roles_db[user_id]
-    # Sử dụng username gốc thay vì display_name
-    embed.add_field(name="👤 Thành viên", value=interaction.user.name, inline=True)
-    embed.add_field(name="🎮 Role", value=f"{role_data['role_full']}", inline=True)
-    embed.add_field(name="📅 Ngày", value=f"<t:{int(datetime.now().timestamp())}:D>", inline=True)
-    embed.add_field(name="🔥 Streak", value=f"{user_data['streak']} ngày", inline=True)
-    embed.add_field(name="📊 Tổng số ngày", value=f"{user_data['total_days']} ngày", inline=True)
-    
-    # Thưởng streak
-    if user_data['streak'] % 7 == 0:
-        embed.add_field(name="🎉 Thưởng", value="Đạt mốc 7 ngày liên tiếp!", inline=False)
-    elif user_data['streak'] % 30 == 0:
-        embed.add_field(name="🎊 Thưởng đặc biệt", value="Đạt mốc 30 ngày liên tiếp!", inline=False)
-    
-    embed.set_footer(text="Tiếp tục phát huy nhé!")
-    
-    await interaction.response.send_message(embed=embed)
-
-@bot.tree.command(name="checkin_stats", description="Xem thống kê chấm công của bạn")
-async def checkin_stats_command(interaction: discord.Interaction):
-    """Xem thống kê chấm công"""
-    user_id = interaction.user.id
-    
-    if user_id not in checkins_db:
-        await interaction.response.send_message(
-            "❌ Bạn chưa chấm công lần nào!",
-            ephemeral=True
-        )
-        return
-    
-    user_data = checkins_db[user_id]
-    role_data = user_roles_db.get(user_id, {})
-    
-    embed = discord.Embed(
-        title="📊 THỐNG KÊ CHẤM CÔNG",
-        color=0x0099ff,
-        timestamp=discord.utils.utcnow()
-    )
-    
-    # Sử dụng username gốc thay vì display_name
-    embed.add_field(name="👤 Thành viên", value=interaction.user.name, inline=True)
-    
-    if role_data:
-        embed.add_field(name="🎮 Role", value=f"{role_data.get('role_full', 'Chưa đăng ký')}", inline=True)
-    
-    embed.add_field(name="🔥 Streak hiện tại", value=f"{user_data['streak']} ngày", inline=True)
-    embed.add_field(name="📊 Tổng số ngày", value=f"{user_data['total_days']} ngày", inline=True)
-    embed.add_field(name="📅 Lần chấm công cuối", value=f"<t:{int(datetime.fromisoformat(user_data['last_checkin']).timestamp())}:D>", inline=True)
-    
-    await interaction.response.send_message(embed=embed, ephemeral=True)
-
-@bot.tree.command(name="report_boss", description="Báo cáo boss đã đánh")
+@bot.tree.command(name="chamcong", description="Chấm công báo cáo boss")
 @app_commands.describe(
     boss="Tên boss đã đánh",
-    date="Ngày đánh boss (dd/mm/yyyy)"
+    ngay_thang="Ngày đánh boss (dd/mm)",
+    vi_tri="Vị trí (chỉ hiện cho role Cầu Phép)",
+    hinh_anh="Hình ảnh minh chứng"
 )
 @app_commands.choices(boss=[
     app_commands.Choice(name=boss["name"], value=boss["value"]) for boss in BOSS_LIST
 ])
-async def report_boss_command(interaction: discord.Interaction, boss: app_commands.Choice[str], date: str = None):
-    """Báo cáo boss đã đánh"""
+@app_commands.choices(vi_tri=[
+    app_commands.Choice(name=vt["name"], value=vt["value"]) for vt in VI_TRI_OPTIONS
+])
+async def chamcong_command(
+    interaction: discord.Interaction, 
+    boss: app_commands.Choice[str],
+    ngay_thang: str,
+    vi_tri: app_commands.Choice[str] = None,
+    hinh_anh: discord.Attachment = None
+):
+    """Lệnh chấm công báo cáo boss mới"""
     # Kiểm tra xem có trong kênh chấm công không
     if interaction.channel.name != CHAMCONG_CHANNEL_NAME:
         await interaction.response.send_message(
@@ -947,144 +889,89 @@ async def report_boss_command(interaction: discord.Interaction, boss: app_comman
         return
     
     # Kiểm tra xem user đã set role chưa
-    if interaction.user.id not in user_roles_db:
+    user_id = interaction.user.id
+    if user_id not in user_roles_db:
         await interaction.response.send_message(
-            "❌ Bạn cần đăng ký role trước khi báo cáo boss!",
+            "❌ Bạn cần đăng ký role trước khi sử dụng lệnh chấm công!",
             ephemeral=True
         )
         return
     
-    # Nếu không nhập date, mặc định là hôm nay
-    if date is None:
-        date = datetime.now().strftime("%d/%m/%Y")
+    # Lấy thông tin role
+    user_role_data = user_roles_db[user_id]
+    nickname = user_role_data["nickname"]
     
-    # Lưu thông tin boss chờ duyệt
-    user_id = interaction.user.id
-    pending_boss_approvals[user_id] = {
-        "nickname": interaction.user.display_name,
-        "boss": boss.value,
-        "boss_name": boss.name,
-        "date": date,
-        "timestamp": discord.utils.utcnow().isoformat()
-    }
+    # Kiểm tra nếu role là Cầu Phép (CP) thì bắt buộc phải chọn vị trí
+    if user_role_data["role_short"] == "CP" and vi_tri is None:
+        await interaction.response.send_message(
+            "❌ Với role Cầu Phép (CP), bạn phải chọn vị trí!",
+            ephemeral=True
+        )
+        return
     
-    # Tạo embed báo cáo boss
+    # Kiểm tra định dạng ngày/tháng
+    try:
+        day, month = ngay_thang.split('/')
+        day = int(day)
+        month = int(month)
+        # Kiểm tra ngày tháng hợp lệ
+        if day < 1 or day > 31 or month < 1 or month > 12:
+            raise ValueError
+        # Tạo chuỗi ngày/tháng đã chuẩn hóa
+        ngay_thang = f"{day:02d}/{month:02d}"
+    except:
+        await interaction.response.send_message(
+            "❌ Định dạng ngày/tháng không hợp lệ! Hãy nhập theo dạng dd/mm (ví dụ: 15/03).",
+            ephemeral=True
+        )
+        return
+    
+    # Kiểm tra ảnh đính kèm
+    if hinh_anh is None:
+        await interaction.response.send_message(
+            "❌ Vui lòng đính kèm hình ảnh minh chứng!",
+            ephemeral=True
+        )
+        return
+    
+    # Lấy URL ảnh boss từ BOSS_IMAGES
+    boss_image_url = BOSS_IMAGES.get(boss.name)
+    if not boss_image_url:
+        # Thử tìm bằng value nếu không tìm thấy bằng name
+        for boss_item in BOSS_LIST:
+            if boss_item["value"] == boss.value:
+                boss_image_url = BOSS_IMAGES.get(boss_item["name"])
+                break
+    
+    # Tạo embed vé chấm công
     embed = discord.Embed(
-        title="🎯 BÁO CÁO BOSS",
-        color=0x0099ff,
+        title="🎯 CHẤM CÔNG BOSS",
+        color=0x00ff00,
         timestamp=discord.utils.utcnow()
     )
     
-    embed.add_field(name="👤 Thành viên", value=interaction.user.name, inline=True)
-    embed.add_field(name="🎯 Boss", value=boss.name, inline=True)
-    embed.add_field(name="📅 Ngày", value=date, inline=True)
-    embed.add_field(name="⏰ Thời gian báo cáo", value=f"<t:{int(datetime.now().timestamp())}:R>", inline=True)
-    embed.add_field(name="📊 Trạng thái", value="🟡 Đang chờ duyệt", inline=True)
+    # Thêm các trường thông tin theo bố cục yêu cầu
+    embed.add_field(name="Boss", value=boss.name, inline=True)
+    embed.add_field(name="Thành Viên", value=nickname, inline=True)
+    embed.add_field(name="Thời Gian", value=ngay_thang, inline=True)
     
-    # Thêm nút duyệt cho quản trị viên
-    view = discord.ui.View()
-    approve_button = discord.ui.Button(label="✅ Duyệt", style=discord.ButtonStyle.success, custom_id=f"approve_boss_{user_id}")
-    deny_button = discord.ui.Button(label="❌ Từ chối", style=discord.ButtonStyle.danger, custom_id=f"deny_boss_{user_id}")
+    # Thêm vai trò nếu có
+    if vi_tri:
+        embed.add_field(name="Vai trò", value=vi_tri.name, inline=True)
     
-    view.add_item(approve_button)
-    view.add_item(deny_button)
+    # Thêm ảnh boss nếu có
+    if boss_image_url:
+        embed.set_thumbnail(url=boss_image_url)
     
-    await interaction.response.send_message(embed=embed, view=view)
-
-@bot.event
-async def on_interaction(interaction: discord.Interaction):
-    """Xử lý các interaction như button click - ĐÃ ĐIỀU CHỈNH CHO WEBHOOK.SITE"""
-    if interaction.type == discord.InteractionType.component:
-        custom_id = interaction.data.get('custom_id', '')
-        
-        # Xử lý nút duyệt boss - ĐÃ ĐIỀU CHỈNH
-        if custom_id.startswith('approve_boss_'):
-            user_id = int(custom_id.split('_')[2])
-            
-            # Kiểm tra quyền
-            if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message(
-                    "❌ Chỉ quản trị viên mới được duyệt boss!",
-                    ephemeral=True
-                )
-                return
-            
-            if user_id in pending_boss_approvals:
-                boss_data = pending_boss_approvals[user_id]
-                
-                # Gửi dữ liệu đến webhook.site - CHỈ 3 TRƯỜNG DỮ LIỆU
-                webhook_data = {
-                    "nickname": boss_data["nickname"],
-                    "boss": boss_data["boss_name"],
-                    "date": boss_data["date"]
-                }
-                
-                success = await send_to_webhook(webhook_data)
-                
-                # Cập nhật embed
-                embed = interaction.message.embeds[0]
-                embed.set_field_at(4, name="📊 Trạng thái", value="✅ Đã duyệt", inline=True)
-                embed.color = 0x00ff00
-                
-                # Xóa nút sau khi duyệt
-                view = discord.ui.View()
-                await interaction.message.edit(embed=embed, view=view)
-                
-                # Xóa khỏi pending
-                del pending_boss_approvals[user_id]
-                
-                if success:
-                    await interaction.response.send_message(
-                        f"✅ Đã duyệt boss {boss_data['boss_name']} cho {boss_data['nickname']} và gửi dữ liệu thành công!",
-                        ephemeral=True
-                    )
-                else:
-                    await interaction.response.send_message(
-                        f"✅ Đã duyệt boss {boss_data['boss_name']} cho {boss_data['nickname']} nhưng không thể gửi dữ liệu đến webhook!",
-                        ephemeral=True
-                    )
-            else:
-                await interaction.response.send_message(
-                    "❌ Không tìm thấy thông tin boss cần duyệt!",
-                    ephemeral=True
-                )
-        
-        # Xử lý nút từ chối boss
-        elif custom_id.startswith('deny_boss_'):
-            user_id = int(custom_id.split('_')[2])
-            
-            # Kiểm tra quyền
-            if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message(
-                    "❌ Chỉ quản trị viên mới được từ chối boss!",
-                    ephemeral=True
-                )
-                return
-            
-            if user_id in pending_boss_approvals:
-                boss_data = pending_boss_approvals[user_id]
-                
-                # Cập nhật embed
-                embed = interaction.message.embeds[0]
-                embed.set_field_at(4, name="📊 Trạng thái", value="❌ Đã từ chối", inline=True)
-                embed.color = 0xff0000
-                
-                # Xóa nút sau khi từ chối
-                view = discord.ui.View()
-                await interaction.message.edit(embed=embed, view=view)
-                
-                # Xóa khỏi pending
-                del pending_boss_approvals[user_id]
-                
-                await interaction.response.send_message(
-                    f"❌ Đã từ chối boss {boss_data['boss_name']} cho {boss_data['nickname']}",
-                    ephemeral=True
-                )
-            else:
-                await interaction.response.send_message(
-                    "❌ Không tìm thấy thông tin boss cần từ chối!",
-                    ephemeral=True
-                )
+    # Thêm ảnh đính kèm
+    if hinh_anh:
+        embed.set_image(url=hinh_anh.url)
+    
+    embed.set_footer(text=f"Chấm công bởi {interaction.user.name}")
+    
+    await interaction.response.send_message(embed=embed)
+    
+    print(f"✅ {nickname} đã chấm công boss {boss.name}")
 
 # ===============================
 # HỆ THỐNG ĐẤU GIÁ
@@ -1277,6 +1164,288 @@ async def bid_command(interaction: discord.Interaction, amount: int):
     alert_embed.add_field(name="⏰ Kết thúc sau", value=f"{minutes_remaining} phút", inline=True)
     
     await interaction.channel.send(embed=alert_embed)
+
+@bot.tree.command(name="end_auction", description="Kết thúc phiên đấu giá sớm (Chỉ Admin)")
+@app_commands.describe(auction_id="ID của phiên đấu giá (xem trong footer của tin nhắn auction)")
+async def end_auction_command(interaction: discord.Interaction, auction_id: str):
+    """Kết thúc phiên đấu giá sớm"""
+    if not interaction.user.guild_permissions.manage_messages:
+        await interaction.response.send_message(
+            "❌ Chỉ quản trị viên mới được sử dụng lệnh này!",
+            ephemeral=True
+        )
+        return
+    
+    if auction_id not in auctions_db:
+        await interaction.response.send_message(
+            "❌ Không tìm thấy phiên đấu giá với ID này!",
+            ephemeral=True
+        )
+        return
+    
+    auction = auctions_db[auction_id]
+    
+    # Kiểm tra xem auction đã kết thúc chưa
+    if auction.get('ended', False):
+        await interaction.response.send_message(
+            "❌ Phiên đấu giá này đã kết thúc!",
+            ephemeral=True
+        )
+        return
+    
+    # Kết thúc auction
+    auction['ended'] = True
+    auction['end_time'] = discord.utils.utcnow()
+    
+    # Lấy thread
+    thread = bot.get_channel(auction['thread_id'])
+    if thread:
+        # Xóa tin nhắn đếm ngược cũ nếu có
+        if auction['thread_id'] in countdown_messages:
+            try:
+                old_msg = await thread.fetch_message(countdown_messages[auction['thread_id']])
+                await old_msg.delete()
+            except:
+                pass
+            del countdown_messages[auction['thread_id']]
+        
+        # Khoá thread
+        await thread.edit(locked=True, archived=True)
+        
+        # Thông báo người thắng cuộc
+        if auction.get('last_bidder'):
+            winner = bot.get_user(auction['last_bidder'])
+            if winner:
+                winner_name = winner.name
+                await thread.send(f"🎉 **NGƯỜI THẮNG CUỘC: 🏆 {winner_name} 🏆 VỚI GIÁ {auction['current_price']:,} 💎**")
+            else:
+                await thread.send(f"🎉 **NGƯỜI THẮNG CUỘC: <@{auction['last_bidder']}> VỚI GIÁ {auction['current_price']:,} 💎!**")
+        else:
+            await thread.send("❌ **KHÔNG CÓ AI ĐẤU GIÁ!**")
+        
+        await thread.send("🛑 **PHIÊN ĐẤU GIÁ ĐÃ KẾT THÚC SỚM BỞI QUẢN TRỊ VIÊN!**")
+    
+    await interaction.response.send_message(
+        f"✅ Đã kết thúc phiên đấu giá {auction_id}!",
+        ephemeral=True
+    )
+
+@bot.tree.command(name="auction_stats", description="Xem thống kê các phiên đấu giá")
+async def auction_stats_command(interaction: discord.Interaction):
+    """Xem thống kê auction"""
+    active_auctions = []
+    ended_auctions = []
+    
+    for auction_id, auction in auctions_db.items():
+        if auction.get('ended', False):
+            ended_auctions.append(auction)
+        else:
+            active_auctions.append(auction)
+    
+    embed = discord.Embed(
+        title="📊 THỐNG KÊ ĐẤU GIÁ",
+        color=0x0099ff,
+        timestamp=discord.utils.utcnow()
+    )
+    
+    embed.add_field(name="🟢 Đang hoạt động", value=f"{len(active_auctions)} phiên", inline=True)
+    embed.add_field(name="🔴 Đã kết thúc", value=f"{len(ended_auctions)} phiên", inline=True)
+    embed.add_field(name="📈 Tổng cộng", value=f"{len(auctions_db)} phiên", inline=True)
+    
+    # Hiển thị auction đang active
+    if active_auctions:
+        active_text = ""
+        for auction in active_auctions[:5]:  # Giới hạn hiển thị 5 auction
+            item = auction['item']
+            time_remaining = auction['end_time'] - discord.utils.utcnow()
+            minutes = int(time_remaining.total_seconds() // 60)
+            seconds = int(time_remaining.total_seconds() % 60)
+            
+            # Hiển thị thông tin người đặt giá cuối
+            last_bidder_info = ""
+            if auction.get('last_bidder'):
+                bidder = bot.get_user(auction['last_bidder'])
+                if bidder:
+                    last_bidder_info = f" - {bidder.name}"
+                else:
+                    last_bidder_info = f" - <@{auction['last_bidder']}>"
+            
+            active_text += f"• {item['emoji']} **{item['name']}** - {auction['current_price']:,} 💎{last_bidder_info} - Còn {minutes}p{seconds}s\n"
+        
+        if len(active_auctions) > 5:
+            active_text += f"... và {len(active_auctions) - 5} phiên khác"
+        
+        embed.add_field(name="🎯 Đấu giá đang diễn ra", value=active_text, inline=False)
+    else:
+        embed.add_field(name="🎯 Đấu giá đang diễn ra", value="*Không có phiên đấu giá nào đang hoạt động*", inline=False)
+    
+    # Hiển thị auction đã kết thúc gần đây
+    recent_ended = ended_auctions[-3:]  # 3 auction gần nhất
+    if recent_ended:
+        ended_text = ""
+        for auction in recent_ended:
+            item = auction['item']
+            winner_info = "Không có người thắng"
+            if auction.get('last_bidder'):
+                winner = bot.get_user(auction['last_bidder'])
+                if winner:
+                    winner_info = winner.name
+                else:
+                    winner_info = f"<@{auction['last_bidder']}>"
+            
+            ended_text += f"• {item['emoji']} **{item['name']}** - {auction['current_price']:,} 💎 - 🏆{winner_info}\n"
+        
+        embed.add_field(name="📝 Kết thúc gần đây", value=ended_text, inline=False)
+    
+    await interaction.response.send_message(embed=embed)
+
+@bot.tree.command(name="active_auctions", description="Xem danh sách các phiên đấu giá đang hoạt động")
+async def active_auctions_command(interaction: discord.Interaction):
+    """Xem danh sách auction đang hoạt động"""
+    active_auctions = [auction for auction in auctions_db.values() if not auction.get('ended', False)]
+    
+    if not active_auctions:
+        embed = discord.Embed(
+            title="📋 DANH SÁCH ĐẤU GIÁ ĐANG HOẠT ĐỘNG",
+            description="*Hiện không có phiên đấu giá nào đang diễn ra*",
+            color=0xffff00
+        )
+        await interaction.response.send_message(embed=embed)
+        return
+    
+    embed = discord.Embed(
+        title="📋 DANH SÁCH ĐẤU GIÁ ĐANG HOẠT ĐỘNG",
+        color=0x00ff00,
+        timestamp=discord.utils.utcnow()
+    )
+    
+    for i, auction in enumerate(active_auctions, 1):
+        item = auction['item']
+        time_remaining = auction['end_time'] - discord.utils.utcnow()
+        minutes = int(time_remaining.total_seconds() // 60)
+        seconds = int(time_remaining.total_seconds() % 60)
+        
+        # Lấy thông tin người đặt giá cuối
+        last_bidder_info = "Chưa có ai đặt giá"
+        if auction.get('last_bidder'):
+            bidder = bot.get_user(auction['last_bidder'])
+            if bidder:
+                last_bidder_info = bidder.name
+            else:
+                last_bidder_info = f"<@{auction['last_bidder']}>"
+        
+        # Lấy thread để có link
+        thread = bot.get_channel(auction['thread_id'])
+        thread_mention = thread.mention if thread else "Không tìm thấy"
+        
+        embed.add_field(
+            name=f"{i}. {item['emoji']} {item['name']}",
+            value=(
+                f"💰 **Giá hiện tại:** {auction['current_price']:,} 💎\n"
+                f"👤 **Người đặt giá cuối:** {last_bidder_info}\n"
+                f"⏰ **Thời gian còn lại:** {minutes} phút {seconds} giây\n"
+                f"🔗 **Tham gia:** {thread_mention}\n"
+                f"🎯 **Boss:** {auction.get('boss', 'Không xác định')}"
+            ),
+            inline=False
+        )
+    
+    await interaction.response.send_message(embed=embed)
+
+@bot.tree.command(name="bid_history", description="Xem lịch sử đặt giá của phiên đấu giá hiện tại")
+async def bid_history_command(interaction: discord.Interaction):
+    """Xem lịch sử đặt giá trong thread đấu giá hiện tại"""
+    # Tìm auction đang active trong thread này
+    auction = None
+    
+    for auc in auctions_db.values():
+        if auc['thread_id'] == interaction.channel.id and not auc.get('ended', False):
+            auction = auc
+            break
+    
+    if not auction:
+        await interaction.response.send_message(
+            "❌ Không tìm thấy phiên đấu giá đang hoạt động trong thread này!",
+            ephemeral=True
+        )
+        return
+    
+    bids = auction.get('bids', [])
+    
+    if not bids:
+        embed = discord.Embed(
+            title="📜 LỊCH SỬ ĐẶT GIÁ",
+            description="*Chưa có lần đặt giá nào trong phiên đấu giá này*",
+            color=0xffff00
+        )
+        await interaction.response.send_message(embed=embed)
+        return
+    
+    embed = discord.Embed(
+        title="📜 LỊCH SỬ ĐẶT GIÁ",
+        color=0x0099ff,
+        timestamp=discord.utils.utcnow()
+    )
+    
+    # Hiển thị 10 bid gần nhất (đảo ngược để mới nhất lên đầu)
+    recent_bids = list(reversed(bids))[:10]
+    
+    for i, bid in enumerate(recent_bids, 1):
+        bidder = bot.get_user(bid['user_id'])
+        bidder_name = bidder.name if bidder else f"<@{bid['user_id']}>"
+        
+        time_ago = discord.utils.utcnow() - bid['timestamp']
+        minutes_ago = int(time_ago.total_seconds() // 60)
+        
+        embed.add_field(
+            name=f"#{len(bids) - i + 1} - {bidder_name}",
+            value=f"💰 {bid['amount']:,} 💎 - {minutes_ago} phút trước",
+            inline=False
+        )
+    
+    embed.set_footer(text=f"Tổng cộng {len(bids)} lần đặt giá")
+    await interaction.response.send_message(embed=embed)
+
+@bot.tree.command(name="item_list", description="Xem danh sách vật phẩm có thể đấu giá")
+async def item_list_command(interaction: discord.Interaction):
+    """Xem danh sách vật phẩm đấu giá"""
+    if not AUCTION_ITEMS:
+        await interaction.response.send_message(
+            "❌ Danh sách vật phẩm trống!",
+            ephemeral=True
+        )
+        return
+    
+    embed = discord.Embed(
+        title="📦 DANH SÁCH VẬT PHẨM ĐẤU GIÁ",
+        color=0x0099ff,
+        timestamp=discord.utils.utcnow()
+    )
+    
+    # Nhóm vật phẩm theo category
+    items_by_category = {}
+    for item in AUCTION_ITEMS:
+        category = item.get('category', 'khác')
+        if category not in items_by_category:
+            items_by_category[category] = []
+        items_by_category[category].append(item)
+    
+    for category, items in items_by_category.items():
+        category_text = ""
+        for item in items[:10]:  # Giới hạn 10 vật phẩm mỗi category
+            category_text += f"{item['emoji']} **{item['name']}**\n"
+        
+        if len(items) > 10:
+            category_text += f"... và {len(items) - 10} vật phẩm khác"
+        
+        embed.add_field(
+            name=f"🎯 {category.upper()}",
+            value=category_text,
+            inline=True
+        )
+    
+    embed.set_footer(text=f"Tổng cộng {len(AUCTION_ITEMS)} vật phẩm")
+    await interaction.response.send_message(embed=embed)
 
 # ===============================
 # LỆNH QUẢN LÝ KHÁC
