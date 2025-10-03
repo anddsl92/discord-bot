@@ -1326,7 +1326,7 @@ async def server_info_command(interaction: discord.Interaction):
 
 if __name__ == "__main__":
     # Lấy token từ biến môi trường (Render)
-    token = "MTQyMjU4OTI0NzExNzg1Njk3Mg.GA2zQj.SkfVAGpzfmyZ1K8I8txpf3sTbRST97Zv-BjcwU"
+    token = os.getenv('DISCORD_TOKEN')
     
     if not token:
         print("❌ Không tìm thấy DISCORD_TOKEN!")
